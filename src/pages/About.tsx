@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { CartItem } from '@/lib/data';
 import Navbar from '@/components/Navbar';
 import Cart from '@/components/Cart';
+import { useToast } from '@/components/ui/use-toast';
 
 const About = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [showCart, setShowCart] = useState(false);
+  const { toast } = useToast();
 
   const handleUpdateQuantity = (bookId: number, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -18,6 +20,22 @@ const About = () => {
           : item
       ));
     }
+  };
+
+  const handleRemoveFromCart = (bookId: number) => {
+    setCartItems(cartItems.filter(item => item.book.id !== bookId));
+    toast({
+      title: "Item removed",
+      description: "The item has been removed from your cart.",
+    });
+  };
+
+  const handleCheckout = () => {
+    toast({
+      title: "Checkout initiated",
+      description: "Thank you for your order!",
+    });
+    setShowCart(false);
   };
 
   return (
@@ -74,7 +92,9 @@ const About = () => {
         items={cartItems} 
         isOpen={showCart} 
         onClose={() => setShowCart(false)} 
-        onUpdateQuantity={handleUpdateQuantity} 
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemove={handleRemoveFromCart}
+        onCheckout={handleCheckout}
       />
     </div>
   );

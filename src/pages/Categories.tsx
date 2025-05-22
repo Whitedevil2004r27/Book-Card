@@ -60,6 +60,22 @@ const Categories = () => {
     }
   };
 
+  const handleRemoveFromCart = (bookId: number) => {
+    setCartItems(cartItems.filter(item => item.book.id !== bookId));
+    toast({
+      title: "Item removed",
+      description: "The item has been removed from your cart.",
+    });
+  };
+
+  const handleCheckout = () => {
+    toast({
+      title: "Checkout initiated",
+      description: "Thank you for your order!",
+    });
+    setShowCart(false);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar cartItems={cartItems} onCartClick={() => setShowCart(true)} />
@@ -111,7 +127,9 @@ const Categories = () => {
         items={cartItems} 
         isOpen={showCart} 
         onClose={() => setShowCart(false)} 
-        onUpdateQuantity={handleUpdateQuantity} 
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemove={handleRemoveFromCart}
+        onCheckout={handleCheckout}
       />
     </div>
   );

@@ -120,6 +120,9 @@ export const books: Book[] = [
   }
 ];
 
+// Export books as mockBooks as well
+export const mockBooks = books;
+
 export interface CartItem {
   book: Book;
   quantity: number;
