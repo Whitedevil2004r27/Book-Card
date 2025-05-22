@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useToast } from "@/hooks/use-toast";
 
@@ -11,6 +11,7 @@ interface BookCardProps {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart, onViewDetails }) => {
   const { toast } = useToast();
+  const [imageError, setImageError] = useState(false);
   
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -22,17 +23,29 @@ const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart, onViewDetails })
     });
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <div 
       className="book-card-shadow book-card-hover bg-white rounded-xl overflow-hidden cursor-pointer transform"
       onClick={() => onViewDetails(book)}
     >
       <div className="relative h-80 overflow-hidden">
-        <img 
-          src={book.coverImage} 
-          alt={book.title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-        />
+        {!imageError ? (
+          <img 
+            src={book.coverImage} 
+            alt={book.title}
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+            onError={handleImageError}
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <p className="text-gray-500 text-lg font-medium">{book.title}</p>
+          </div>
+        )}
         {book.featured && (
           <div className="absolute top-4 left-0 bg-accent text-white px-4 py-1 rounded-r-full font-bold">
             Featured

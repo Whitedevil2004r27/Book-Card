@@ -106,11 +106,17 @@ const Categories = () => {
             ))}
           </div>
           
-          <BookGrid 
-            books={filteredBooks} 
-            onAddToCart={handleAddToCart} 
-            onViewDetails={handleViewDetails} 
-          />
+          {filteredBooks.length > 0 ? (
+            <BookGrid 
+              books={filteredBooks} 
+              onAddToCart={handleAddToCart} 
+              onViewDetails={handleViewDetails} 
+            />
+          ) : (
+            <div className="text-center py-10">
+              <p className="text-lg text-gray-600">No books found in this category.</p>
+            </div>
+          )}
         </div>
       </section>
       
