@@ -7,6 +7,7 @@ import BookGrid from '@/components/BookGrid';
 import BookDetail from '@/components/BookDetail';
 import Cart from '@/components/Cart';
 import { useToast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [books] = useState<Book[]>(mockBooks);
@@ -15,6 +16,7 @@ const Home = () => {
   const [showCart, setShowCart] = useState(false);
   const [showBookDetail, setShowBookDetail] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleAddToCart = (book: Book) => {
     const existingItem = cartItems.find(item => item.book.id === book.id);
@@ -68,6 +70,10 @@ const Home = () => {
     setShowCart(false);
   };
 
+  const handleStartExploring = () => {
+    navigate('/browse');
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar cartItems={cartItems} onCartClick={() => setShowCart(true)} />
@@ -79,7 +85,10 @@ const Home = () => {
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mb-10">
             Explore our vast collection of bestsellers, classics, and hidden gems to find stories that inspire, entertain, and enlighten.
           </p>
-          <button className="bg-primary text-white px-8 py-4 rounded-lg text-xl font-medium hover:bg-primary/90 transition-colors">
+          <button 
+            className="bg-primary text-white px-8 py-4 rounded-lg text-xl font-medium hover:bg-primary/90 transition-colors animate-pulse hover:animate-none"
+            onClick={handleStartExploring}
+          >
             Start Exploring
           </button>
         </div>

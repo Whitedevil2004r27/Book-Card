@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import FeaturedBooks from '@/components/FeaturedBooks';
 import BookGrid from '@/components/BookGrid';
@@ -15,6 +16,7 @@ const Index = () => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleAddToCart = (book: Book) => {
     setCartItems(prevItems => {
@@ -63,6 +65,10 @@ const Index = () => {
     setIsDetailOpen(true);
   };
 
+  const handleStartExploring = () => {
+    navigate('/browse');
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar 
@@ -76,7 +82,10 @@ const Index = () => {
             <div className="max-w-3xl">
               <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6">Discover Your Next Favorite Book</h1>
               <p className="text-xl md:text-2xl mb-8 opacity-90">Explore our curated collection of bestsellers, classics, and hidden gems.</p>
-              <button className="bg-accent hover:bg-accent-dark text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors">
+              <button 
+                className="bg-accent hover:bg-accent-dark text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors animate-pulse hover:animate-none"
+                onClick={handleStartExploring}
+              >
                 Start Exploring
               </button>
             </div>
