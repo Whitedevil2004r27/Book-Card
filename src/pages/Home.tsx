@@ -6,7 +6,7 @@ import FeaturedBooks from '@/components/FeaturedBooks';
 import BookGrid from '@/components/BookGrid';
 import BookDetail from '@/components/BookDetail';
 import Cart from '@/components/Cart';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -81,7 +81,7 @@ const Home = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-primary/10 to-accent/10 py-20 px-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">Discover Your Next Favorite Book</h1>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">Welcome to BookVerse</h1>
           <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mb-10">
             Explore our vast collection of bestsellers, classics, and hidden gems to find stories that inspire, entertain, and enlighten.
           </p>

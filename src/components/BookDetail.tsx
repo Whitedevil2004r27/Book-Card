@@ -34,6 +34,10 @@ const BookDetail: React.FC<BookDetailProps> = ({ book, isOpen, onClose, onAddToC
               src={book.coverImage}
               alt={book.title}
               className="w-full max-w-[300px] object-cover rounded-lg shadow-lg"
+              onError={(e) => {
+                (e.target as HTMLImageElement).onerror = null;
+                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x450?text=' + encodeURIComponent(book.title);
+              }}
             />
           </div>
           

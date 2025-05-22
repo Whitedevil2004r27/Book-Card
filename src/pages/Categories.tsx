@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import BookGrid from '@/components/BookGrid';
 import BookDetail from '@/components/BookDetail';
 import Cart from '@/components/Cart';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 
 const Categories = () => {
@@ -82,7 +82,7 @@ const Categories = () => {
       
       <section className="py-16 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Book Categories</h1>
+          <h1 className="text-5xl font-bold mb-6">BookVerse Categories</h1>
           <p className="text-xl text-gray-600 max-w-3xl mb-10">
             Explore our books by category to find exactly what you're looking for.
           </p>

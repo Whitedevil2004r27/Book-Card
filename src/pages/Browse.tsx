@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import BookGrid from '@/components/BookGrid';
 import BookDetail from '@/components/BookDetail';
 import Cart from '@/components/Cart';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 const Browse = () => {
   const [books] = useState<Book[]>(mockBooks);
@@ -73,7 +73,7 @@ const Browse = () => {
       
       <section className="py-16 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Browse Our Collection</h1>
+          <h1 className="text-5xl font-bold mb-6">Browse BookVerse</h1>
           <p className="text-xl text-gray-600 max-w-3xl mb-10">
             Discover books across all genres, from bestselling fiction to compelling non-fiction, classics to contemporary releases.
           </p>
