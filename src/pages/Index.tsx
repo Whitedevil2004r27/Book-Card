@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -8,6 +7,7 @@ import Cart from '@/components/Cart';
 import BookDetail from '@/components/BookDetail';
 import { books as bookData, Book, CartItem } from '@/lib/data';
 import { useToast } from "@/hooks/use-toast";
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const Index = () => {
   const [books] = useState<Book[]>(bookData);
@@ -70,90 +70,92 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar 
-        cartItems={cartItems} 
-        onCartClick={() => setIsCartOpen(true)} 
-      />
-      
-      <main>
-        <section className="py-20 px-6 bg-gradient-to-r from-primary-dark to-primary text-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-3xl">
-              <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6">Discover Your Next Favorite Book</h1>
-              <p className="text-xl md:text-2xl mb-8 opacity-90">Explore our curated collection of bestsellers, classics, and hidden gems.</p>
-              <button 
-                className="bg-accent hover:bg-accent-dark text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors animate-pulse hover:animate-none"
-                onClick={handleStartExploring}
-              >
-                Start Exploring
-              </button>
-            </div>
-          </div>
-        </section>
-        
-        <FeaturedBooks 
-          books={books}
-          onAddToCart={handleAddToCart}
-          onViewDetails={handleViewBookDetails}
+    <ThemeProvider>
+      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+        <Navbar 
+          cartItems={cartItems} 
+          onCartClick={() => setIsCartOpen(true)} 
         />
         
-        <BookGrid 
-          books={books}
-          onAddToCart={handleAddToCart}
-          onViewDetails={handleViewBookDetails}
-        />
-      </main>
-      
-      <footer className="bg-dark text-white py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">BookCart</h3>
-              <p className="text-gray-300">Your ultimate destination for books of all genres. Find your next page-turner today.</p>
+        <main>
+          <section className="py-20 px-6 bg-gradient-to-r from-primary-dark to-primary text-white">
+            <div className="max-w-7xl mx-auto">
+              <div className="max-w-3xl">
+                <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6">Discover Your Next Favorite Book</h1>
+                <p className="text-xl md:text-2xl mb-8 opacity-90">Explore our curated collection of bestsellers, classics, and hidden gems.</p>
+                <button 
+                  className="bg-accent hover:bg-accent-dark text-white font-bold text-lg py-4 px-8 rounded-lg transition-colors animate-pulse hover:animate-none"
+                  onClick={handleStartExploring}
+                >
+                  Start Exploring
+                </button>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-300 hover:text-white">Home</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Browse</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Categories</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">About</a></li>
-              </ul>
+          </section>
+          
+          <FeaturedBooks 
+            books={books}
+            onAddToCart={handleAddToCart}
+            onViewDetails={handleViewBookDetails}
+          />
+          
+          <BookGrid 
+            books={books}
+            onAddToCart={handleAddToCart}
+            onViewDetails={handleViewBookDetails}
+          />
+        </main>
+        
+        <footer className="bg-dark text-white py-12">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="text-xl font-bold mb-4">BookCart</h3>
+                <p className="text-gray-300">Your ultimate destination for books of all genres. Find your next page-turner today.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+                <ul className="space-y-2">
+                  <li><a href="#" className="text-gray-300 hover:text-white">Home</a></li>
+                  <li><a href="#" className="text-gray-300 hover:text-white">Browse</a></li>
+                  <li><a href="#" className="text-gray-300 hover:text-white">Categories</a></li>
+                  <li><a href="#" className="text-gray-300 hover:text-white">About</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-4">Contact</h3>
+                <p className="text-gray-300">Email: contact@bookcart.com</p>
+                <p className="text-gray-300">Phone: (123) 456-7890</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-bold mb-4">Contact</h3>
-              <p className="text-gray-300">Email: contact@bookcart.com</p>
-              <p className="text-gray-300">Phone: (123) 456-7890</p>
+            <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+              <p>&copy; {new Date().getFullYear()} BookCart. All rights reserved.</p>
             </div>
           </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-            <p>&copy; {new Date().getFullYear()} BookCart. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
 
-      <Cart 
-        items={cartItems}
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemove={handleRemoveFromCart}
-        onCheckout={handleCheckout}
-      />
-      
-      <BookDetail 
-        book={selectedBook}
-        isOpen={isDetailOpen}
-        onClose={() => setIsDetailOpen(false)}
-        onAddToCart={handleAddToCart}
-      />
-      
-      <div 
-        className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity ${isCartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setIsCartOpen(false)}
-      ></div>
-    </div>
+        <Cart 
+          items={cartItems}
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          onUpdateQuantity={handleUpdateQuantity}
+          onRemove={handleRemoveFromCart}
+          onCheckout={handleCheckout}
+        />
+        
+        <BookDetail 
+          book={selectedBook}
+          isOpen={isDetailOpen}
+          onClose={() => setIsDetailOpen(false)}
+          onAddToCart={handleAddToCart}
+        />
+        
+        <div 
+          className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity ${isCartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          onClick={() => setIsCartOpen(false)}
+        ></div>
+      </div>
+    </ThemeProvider>
   );
 };
 
