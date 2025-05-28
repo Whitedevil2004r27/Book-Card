@@ -7,9 +7,15 @@ interface BookGridProps {
   books: Book[];
   onAddToCart: (book: Book) => void;
   onViewDetails: (book: Book) => void;
+  onImageUpdate?: (bookId: number, newImageUrl: string) => void;
 }
 
-const BookGrid: React.FC<BookGridProps> = ({ books, onAddToCart, onViewDetails }) => {
+const BookGrid: React.FC<BookGridProps> = ({ 
+  books, 
+  onAddToCart, 
+  onViewDetails, 
+  onImageUpdate 
+}) => {
   return (
     <section className="py-16 px-6 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
@@ -23,6 +29,7 @@ const BookGrid: React.FC<BookGridProps> = ({ books, onAddToCart, onViewDetails }
               book={book}
               onAddToCart={onAddToCart}
               onViewDetails={onViewDetails}
+              onImageUpdate={onImageUpdate}
             />
           ))}
         </div>

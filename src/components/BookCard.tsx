@@ -2,14 +2,21 @@
 import React, { useState } from 'react';
 import { Book } from '@/lib/data';
 import { useToast } from "@/hooks/use-toast";
+import BookImageManager from './BookImageManager';
 
 interface BookCardProps {
   book: Book;
   onAddToCart: (book: Book) => void;
   onViewDetails: (book: Book) => void;
+  onImageUpdate?: (bookId: number, newImageUrl: string) => void;
 }
 
-const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart, onViewDetails }) => {
+const BookCard: React.FC<BookCardProps> = ({ 
+  book, 
+  onAddToCart, 
+  onViewDetails, 
+  onImageUpdate 
+}) => {
   const { toast } = useToast();
   const [imageError, setImageError] = useState(false);
   
@@ -29,10 +36,17 @@ const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart, onViewDetails })
 
   return (
     <div 
-      className="book-card-shadow book-card-hover bg-white rounded-xl overflow-hidden cursor-pointer transform"
+      className="book-card-shadow book-card-hover bg-white rounded-xl overflow-hidden cursor-pointer transform group relative"
       onClick={() => onViewDetails(book)}
     >
       <div className="relative h-80 overflow-hidden">
+        {onImageUpdate && (
+          <BookImageManager 
+            book={book} 
+            onImageUpdate={onImageUpdate}
+          />
+        )}
+        
         {!imageError ? (
           <img 
             src={book.coverImage} 
@@ -43,7 +57,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart, onViewDetails })
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <p className="text-gray-500 text-lg font-medium">{book.title}</p>
+            <p className="text-gray-500 text-lg font-medium text-center px-4">{book.title}</p>
           </div>
         )}
         {book.featured && (

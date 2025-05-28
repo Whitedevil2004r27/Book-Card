@@ -8,12 +8,27 @@ import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
 const Browse = () => {
-  const [books] = useState<Book[]>(mockBooks);
+  const [books, setBooks] = useState<Book[]>(mockBooks);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [showCart, setShowCart] = useState(false);
   const [showBookDetail, setShowBookDetail] = useState(false);
   const { toast } = useToast();
+
+  const handleImageUpdate = (bookId: number, newImageUrl: string) => {
+    setBooks(prevBooks => 
+      prevBooks.map(book => 
+        book.id === bookId 
+          ? { ...book, coverImage: newImageUrl }
+          : book
+      )
+    );
+    
+    toast({
+      title: "Cover updated",
+      description: "Book cover has been successfully updated.",
+    });
+  };
 
   const handleAddToCart = (book: Book) => {
     const existingItem = cartItems.find(item => item.book.id === book.id);
@@ -76,7 +91,7 @@ const Browse = () => {
           <div className="max-w-7xl mx-auto">
             <h1 className="text-5xl font-bold mb-6">Browse BookVerse</h1>
             <p className="text-xl text-gray-600 max-w-3xl mb-10">
-              Discover books across all genres, from bestselling fiction to compelling non-fiction, classics to contemporary releases.
+              Discover books across all genres, from bestselling fiction to compelling non-fiction, classics to contemporary releases. Hover over book covers to update images!
             </p>
             
             {/* Filter options could be added here in future */}
@@ -84,7 +99,8 @@ const Browse = () => {
             <BookGrid 
               books={books} 
               onAddToCart={handleAddToCart} 
-              onViewDetails={handleViewDetails} 
+              onViewDetails={handleViewDetails}
+              onImageUpdate={handleImageUpdate}
             />
           </div>
         </section>
